@@ -10697,6 +10697,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2305253897049491549, guid: 2d5a470307ea24194836c2b2def9fd16, type: 3}
     - target: {fileID: 3843761547426257829, guid: 5c53403f2b40140c9bda46eea4476e6f, type: 3}
+      propertyPath: cpuUsageUI
+      value: 
+      objectReference: {fileID: 1670717863}
+    - target: {fileID: 3843761547426257829, guid: 5c53403f2b40140c9bda46eea4476e6f, type: 3}
       propertyPath: avatarPrefabs
       value: 
       objectReference: {fileID: 2972582970869781290, guid: 1d3ec05af9da1472d82eddf70ca99d72, type: 3}
