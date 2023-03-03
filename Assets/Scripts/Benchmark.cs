@@ -9,7 +9,10 @@ public class Benchmark : MonoBehaviour
     private Text fpsUI = null;
 
     [SerializeField]
-    private Vector3 initPosition = new Vector3(10.0f, 10.0f, -10.0f);
+    private Text cpuUsageUI = null;
+
+    [SerializeField]
+    private Vector3 initPosition = new Vector3(5.0f, 10.0f, -10.0f);
 
     [SerializeField]
     private GameObject avatarPrefabs = null;
@@ -21,6 +24,8 @@ public class Benchmark : MonoBehaviour
 
     private bool autoFlag = false;
 
+    private CpuUsage cpuUsage = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +33,9 @@ public class Benchmark : MonoBehaviour
         {
             Debug.LogError("Avatar is not set");
         }
+
+        cpuUsage = new CpuUsage();
+        cpuUsage.Start();
     }
 
     // Update is called once per frame
@@ -37,6 +45,17 @@ public class Benchmark : MonoBehaviour
         {
             fpsUI.text = CheckFPS();
         }
+
+        if (cpuUsageUI)
+        {
+            cpuUsage.UpdateProcessorCount();
+            cpuUsageUI.text = "CPU : " + cpuUsage.GetCpuUsage().ToString("F1") + "%";
+        }
+    }
+
+    private void OnDestroy()
+    {
+        cpuUsage.Stop();
     }
 
     IEnumerator CreateAutoPer(GameObject prefabs, float seconds)
