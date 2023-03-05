@@ -10703,7 +10703,7 @@ PrefabInstance:
     - target: {fileID: 3843761547426257829, guid: 5c53403f2b40140c9bda46eea4476e6f, type: 3}
       propertyPath: avatarPrefabs
       value: 
-      objectReference: {fileID: 2972582970869781290, guid: 1d3ec05af9da1472d82eddf70ca99d72, type: 3}
+      objectReference: {fileID: 5085004077452137665, guid: 22e9fae5ba64044b8b3e5e6d0ed591c2, type: 3}
     - target: {fileID: 3843761547426257829, guid: 5c53403f2b40140c9bda46eea4476e6f, type: 3}
       propertyPath: boxPosition.x
       value: 5
