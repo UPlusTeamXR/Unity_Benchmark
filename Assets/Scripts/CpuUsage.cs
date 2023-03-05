@@ -8,13 +8,13 @@ public class CpuUsage
 {
     private float updateInterval = 1;
 
-    private int processorCount = 0;
+    private int processorCount;
 
-    private float cpuUsage = 0f;
+    private float cpuUsage;
 
-    private Thread cpuThread = null;
+    private Thread cpuThread;
 
-    private bool keepAlive = false;
+    private float lastCpuUsage;
 
     // Start is called before the first frame update
     public CpuUsage()
@@ -28,28 +28,33 @@ public class CpuUsage
 
     ~CpuUsage()
     {
-        keepAlive = false;
+        //UnityEngine.Debug.Log("~CpuUsage()");
         cpuThread?.Abort();
     }
 
     public void Start()
     {
-        keepAlive = true;
         cpuThread?.Start();
     }
 
     public void Stop()
     {
-        keepAlive = false;
         cpuThread?.Abort();
     }
 
     public float GetCpuUsage()
     {
-        if (cpuUsage > 100)
-        {
-            return 0;
-        }
+        // for more efficiency skip if nothing has changed
+        if (Mathf.Approximately(lastCpuUsage, cpuUsage))
+            return lastCpuUsage;
+
+        // the first two values will always be "wrong"
+        // until _lastCpuTime is initialized correctly
+        // so simply ignore values that are out of the possible range
+        if (cpuUsage < 0 || cpuUsage > 100)
+            return lastCpuUsage;
+
+        lastCpuUsage = cpuUsage;
 
         return cpuUsage;
     }
@@ -59,12 +64,15 @@ public class CpuUsage
         processorCount = SystemInfo.processorCount / 2;
     }
 
+    /// <summary>
     /// Runs in Thread
+    /// </summary>
     private void UpdateCPUUsage()
     {
         var lastCpuTime = new TimeSpan(0);
 
-        while (keepAlive)
+        // This is ok since this is executed in a background thread
+        while (true)
         {
             var cpuTime = new TimeSpan(0);
 
