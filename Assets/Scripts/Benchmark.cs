@@ -12,7 +12,10 @@ public class Benchmark : MonoBehaviour
     private Text cpuUsageUI = null;
 
     [SerializeField]
-    private Vector3 initPosition = new Vector3(5.0f, 10.0f, -10.0f);
+    private Vector3 boxInitPosition = new Vector3(5.0f, 10.0f, -10.0f);
+
+    [SerializeField]
+    private Vector3 avatarInitPosition = new Vector3(-2.0f, 5.2f, -7.0f);
 
     [SerializeField]
     private GameObject avatarPrefabs = null;
@@ -20,9 +23,13 @@ public class Benchmark : MonoBehaviour
     [SerializeField]
     private GameObject boxPrefabs = null;
 
+    private Vector3 initPosition = Vector3.zero;
+
     private List<GameObject> createdObject = new List<GameObject>();
 
     private bool autoFlag = false;
+
+    private FpsChecker fpsChecker = null;
 
     private CpuUsage cpuUsage = null;
 
@@ -34,7 +41,10 @@ public class Benchmark : MonoBehaviour
             Debug.LogError("Avatar is not set");
         }
 
+        fpsChecker = new FpsChecker();
+
         cpuUsage = new CpuUsage();
+        cpuUsage.UpdateProcessorCount();
         cpuUsage.Start();
     }
 
@@ -43,12 +53,11 @@ public class Benchmark : MonoBehaviour
     {
         if (fpsUI)
         {
-            fpsUI.text = CheckFPS();
+            fpsUI.text = "FPS : " + fpsChecker.GetFps().ToString();
         }
 
         if (cpuUsageUI)
         {
-            cpuUsage.UpdateProcessorCount();
             cpuUsageUI.text = "CPU : " + cpuUsage.GetCpuUsage().ToString("F1") + "%";
         }
     }
@@ -75,29 +84,25 @@ public class Benchmark : MonoBehaviour
     public void StartCreateBoxAutoPer(float seconds)
     {
         autoFlag = true;
+        initPosition = boxInitPosition;
         StartCoroutine(CreateAutoPer(boxPrefabs, seconds));
     }
 
     public void StartCreateAvatarAutoPer(float seconds)
     {
         autoFlag = true;
+        initPosition = avatarInitPosition;
         StartCoroutine(CreateAutoPer(avatarPrefabs, seconds));
     }
 
     public void StopCreateAuto()
     {
         autoFlag = false;
+        initPosition = Vector3.zero;
         StopAllCoroutines();
         foreach (GameObject go in createdObject)
         {
             Destroy(go);
         }
-    }
-
-    private string CheckFPS ()
-    {
-        float fps = 1.0f / Time.deltaTime;
-        float ms = Time.deltaTime * 1000.0f;
-        return string.Format("FPS : {0:N1} ({1:N1}ms)", fps, ms);
     }
 }
