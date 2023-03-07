@@ -1,3 +1,11 @@
 .DS_Store
 Assets/.DS_Store
 Assets/Contents/POC_avata
+Library
+Logs
+Temp
+.vsconfig
+Assembly-CSharp.csproj
+Unity_Benchmark.sln
+.vs/Unity_Benchmark/xs
+obj
