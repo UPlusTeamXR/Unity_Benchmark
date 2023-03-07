@@ -23,11 +23,16 @@ public class Benchmark : MonoBehaviour
     [SerializeField]
     private GameObject boxPrefabs = null;
 
+    [SerializeField]
+    private Light rotatedLight = null;
+
+    private float rotatedSpeed = 0.0f;
+
     private Vector3 initPosition = Vector3.zero;
 
     private List<GameObject> createdObject = new List<GameObject>();
 
-    private bool autoFlag = false;
+    private bool isDoing = false;
 
     private FpsChecker fpsChecker = null;
 
@@ -60,6 +65,15 @@ public class Benchmark : MonoBehaviour
         {
             cpuUsageUI.text = "CPU : " + cpuUsage.GetCpuUsage().ToString("F1") + "%";
         }
+
+        if (rotatedLight)
+        {
+            rotatedSpeed += Time.deltaTime * 5f;
+            rotatedLight.transform.localEulerAngles = new Vector3(
+                rotatedLight.transform.localEulerAngles.x,
+                rotatedSpeed,
+                rotatedLight.transform.localEulerAngles.z);
+        }
     }
 
     private void OnDestroy()
@@ -71,7 +85,7 @@ public class Benchmark : MonoBehaviour
     {
         GameObject root = new GameObject("Root");
         createdObject.Add(root);
-        while (autoFlag)
+        while (isDoing)
         {
             GameObject one = Instantiate(prefabs);
             one.transform.position = initPosition;
@@ -83,26 +97,33 @@ public class Benchmark : MonoBehaviour
 
     public void StartCreateBoxAutoPer(float seconds)
     {
-        autoFlag = true;
+        if (isDoing)
+            return;
+
+        isDoing = true;
         initPosition = boxInitPosition;
         StartCoroutine(CreateAutoPer(boxPrefabs, seconds));
     }
 
     public void StartCreateAvatarAutoPer(float seconds)
     {
-        autoFlag = true;
+        if (isDoing)
+            return;
+
+        isDoing = true;
         initPosition = avatarInitPosition;
         StartCoroutine(CreateAutoPer(avatarPrefabs, seconds));
     }
 
     public void StopCreateAuto()
     {
-        autoFlag = false;
+        isDoing = false;
         initPosition = Vector3.zero;
         StopAllCoroutines();
         foreach (GameObject go in createdObject)
         {
             Destroy(go);
         }
+        createdObject.Clear();
     }
 }
