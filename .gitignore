@@ -7,3 +7,5 @@ Temp
 .vsconfig
 Assembly-CSharp.csproj
 Unity_Benchmark.sln
+.vs/Unity_Benchmark/xs
+obj
