@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{B65E709D-4125-AA5F-D476-E3B05CB27B69}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Benchmark.cs">
+    <Files>
+      <File FileName="Assets/Scripts/FpsChecker.cs" Line="19" Column="1" />
+      <File FileName="Assets/Scripts/Benchmark.cs" Line="74" Column="30" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="11_Native-WebGL_Benchmark" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Benchmark.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6d76708b-1f7f-481f-aeb9-87813feb7bd3" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
